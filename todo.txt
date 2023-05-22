@@ -1,0 +1,12 @@
+- setup environment
+- integrate api endpoint
+- create store
+- setup redux-toolkit
+
+total pages
+  - auth pages
+  - dashboard page
+  - today page
+  - scheduled page
+  - all tasks page
+  - setting page

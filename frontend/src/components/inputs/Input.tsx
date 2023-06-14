@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = ({
     text-sm
     font-medium
     leading-6
-    text-gray-900"
+    text-gray-700"
         htmlFor={id}
       >
         {label}
@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
             py-2
             px-4
             border-[2px]
-            text-gray-900
+            text-gray-600
             shadow-sm
             outline-none
             placeholder:text-gray-400
@@ -61,7 +61,7 @@ const Input: React.FC<InputProps> = ({
             sm:leading-6
           `,
             errors[id]
-              ? " focus-visible:border-rose-500"
+              ? " focus-visible: border-rose-500"
               : "focus-visible:border-[0] focus-visible:bg-neutral-100",
             disabled && "opacity-50 cursor-default"
           )}

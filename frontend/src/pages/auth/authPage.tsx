@@ -6,16 +6,16 @@ import { useAppSelector } from "../../app/hooks";
 
 const AuthPage = () => {
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.auth);
+  const { currentUser, isLoading } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (auth?.user) {
-      navigate("/dashboard");
+    if (currentUser) {
+      navigate("/");
     }
-  }, [auth?.user]);
+  }, [currentUser]);
 
   return (
-    <div className="bg-neutral-100 h-screen flex items-center justify-center">
+    <div className="bg-neutral-200 h-screen flex items-center justify-center">
       <Toaster />
       <AuthForm />
     </div>

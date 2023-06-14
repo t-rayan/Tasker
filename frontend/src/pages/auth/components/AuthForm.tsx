@@ -64,11 +64,10 @@ const AuthForm = () => {
     >
       <div
         className="
-        bg-white 
+        bg-neutral-50
           px-8
           py-8 
-          shadow
-          rounded-lg
+          rounded-md
           "
       >
         <div className="mb-7">

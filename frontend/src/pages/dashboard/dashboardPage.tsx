@@ -7,36 +7,53 @@ import { MdOutlineToday } from "react-icons/md";
 import { HiCalendarDays } from "react-icons/hi2";
 import { RiFoldersFill } from "react-icons/ri";
 import { AiOutlineCheck } from "react-icons/ai";
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import Button from "../../components/Button";
+import { useEffect } from "react";
+import { getFoldersAction } from "../../features/folder/folderSlice";
+import { getAllTasksAction } from "../../features/task/taskSlice";
+import { RootState } from "../../app/store";
+import Stats from "../../components/Stats";
+import { openAddFolderModal } from "../../features/ui/uiSlice";
+import ChartLine from "../../components/charts/ChartLine";
+import DueToday from "../../components/DueToday";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.user);
+  const { folders } = useAppSelector((state: RootState) => state.folder);
+  const { tasks } = useAppSelector((state: RootState) => state.task);
+
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getFoldersAction());
+      dispatch(getAllTasksAction());
+    }
+  }, [currentUser, dispatch]);
 
   return (
-    <>
-      <PageHeader isButtonHidden title="Dashboard" />
-      <div className="mt-10 flex flex-col gap-2">
-        <h1 className="font-bold text-xl text-neutral-800">Good Morning</h1>
-        <h1 className="font-bold text-xl">Narayan Thapa</h1>
+    <div className="flex flex-col gap-10">
+      {/* <PageHeader isButtonHidden title="Dashboard" /> */}
+      <div>
+        <div className=" flex flex-col gap-2">
+          <h1 className="font-semibold text-2xl text-black">
+            Simplify your workflow with efficient <br /> task management
+          </h1>
+          {/* <h1 className="font-bold text-2xl">Narayan Thapa</h1> */}
+        </div>
+        <p className="mt-2 mb-8 text-gray-400 text-sm">
+          {" "}
+          Stay Organized, Boost Productivity, and Accomplish More with Tasker
+        </p>
+        <Button onClick={() => dispatch(openAddFolderModal())}>
+          Add new project
+        </Button>
       </div>
-      <div className="mt-10 grid grid-cols-2 gap-5 ">
-        <MenuCards
-          icon={MdOutlineToday}
-          label="Today"
-          onClick={() => navigate("/dashboard/today")}
-        />
-        <MenuCards icon={HiCalendarDays} label="Scheduled" onClick={() => {}} />
-        <MenuCards icon={RiFoldersFill} label="All" onClick={() => {}} />
-        <MenuCards icon={AiOutlineCheck} label="Completed" onClick={() => {}} />
-      </div>
-
-      {/* <MenuCards
-                icon={MdOutlineToday}
-                label="Completed"
-                onClick={() => {}}
-              /> */}
-    </>
+      <Stats />
+      <ChartLine />
+      <DueToday />
+    </div>
   );
 };
 

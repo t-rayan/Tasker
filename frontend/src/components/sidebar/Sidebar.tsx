@@ -1,10 +1,19 @@
 "use client";
 
-// import useAddFolderModal from "@/app/hooks/useAddFolderModal";
-import Button from "../Button";
 import SidebarMenuItem from "./SidebarMenuItem";
-import { AiFillFolder, AiOutlineFolder, AiOutlinePlus } from "react-icons/ai";
-import { useEffect } from "react";
+import {
+  HiOutlineClipboardList,
+  HiOutlineHome,
+  HiOutlineMinusCircle,
+  HiOutlineViewGrid,
+} from "react-icons/hi";
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { useAppDispatch } from "../../app/hooks";
+import { logoutAction } from "../../features/auth/authSlice";
+import {
+  openAddFolderModal,
+  openAddTaskModal,
+} from "../../features/ui/uiSlice";
 
 interface SidebarProps {
   folders?: any;
@@ -12,6 +21,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ folders }) => {
   // const addFolderModal = useAddFolderModal();
+  const dispatch = useAppDispatch();
 
   return (
     <div
@@ -20,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ folders }) => {
         md:fixed 
         md:inset-y-0 
         md:left-0 
-        md:z-0
+        md:z-20
         md:w-56 
         md:overflow-y-auto 
         bg-white
@@ -29,26 +39,52 @@ const Sidebar: React.FC<SidebarProps> = ({ folders }) => {
         md:flex
         md:flex-col
         justify-start
-        pl-10
-        pr-5
+        px-6
         "
     >
-      <div className="h-full pt-24 flex flex-col justify-between ">
-        <div>
-          <h3 className="font-semibold text-md text-gray-400">My Projects</h3>
-          <div className="mt-3">
-            <SidebarMenuItem title="Reminders" icon={AiOutlineFolder} />
-          </div>
+      <div className="h-full flex flex-col gap-10 ">
+        {/* logo */}
+        <div className="py-5 ">
+          <h1 className="font-bold text-2xl">Tasker</h1>
         </div>
-        <div className="">
-          <Button fullWidth secondary onClick={() => {}}>
-            <div className="flex justify-between gap-1 items-center">
-              <div>
-                <AiOutlinePlus size={20} />
-              </div>
-              <h3>Add Folder</h3>
+
+        {/* main menu */}
+        <div className="h-full flex flex-col justify-between">
+          <div>
+            <div className="flex flex-col gap-8">
+              <SidebarMenuItem
+                title="Home"
+                currentPath={"/"}
+                icon={HiOutlineHome}
+              />
+              <SidebarMenuItem
+                title="Projects"
+                currentPath="projects"
+                action={() => dispatch(openAddFolderModal())}
+                icon={HiOutlineViewGrid}
+              />
+              <SidebarMenuItem
+                title="Tasks"
+                currentPath="tasks"
+                action={() => dispatch(openAddTaskModal())}
+                icon={HiOutlineClipboardList}
+              />
+              <SidebarMenuItem
+                currentPath="settings"
+                title="Settings"
+                icon={HiOutlineCog6Tooth}
+              />
             </div>
-          </Button>
+          </div>
+          <div
+            className="flex items-center gap-2 cursor-pointer text-neutral-500 hover:text-neutral-700"
+            onClick={() => dispatch(logoutAction())}
+          >
+            <div className="">
+              <HiOutlineMinusCircle />
+            </div>
+            <h3 className="text-sm">Logout</h3>
+          </div>
         </div>
       </div>
     </div>

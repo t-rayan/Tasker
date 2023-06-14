@@ -4,7 +4,7 @@ import Avatar from "./Avatar";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { logout } from "../../features/auth/authSlice";
+import { logout, logoutAction } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const UserMenu = () => {
@@ -12,20 +12,21 @@ const UserMenu = () => {
   const navigate = useNavigate();
   const [isOpen, setIsopen] = useState(false);
   const auth = useAppSelector((state) => state.auth);
+  const { currentUser } = useAppSelector((state) => state.user);
 
   const toggleOpen = useCallback(() => {
     setIsopen((value) => !value);
   }, [isOpen]);
 
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/");
+    dispatch(logoutAction());
+    // navigate("/auth");
   };
 
   return (
     <div className="relative">
       <div
-        className="flex flex-row items-center gap-1 cursor-pointer
+        className="flex flex-row items-center gap-3 cursor-pointer
         "
         onClick={toggleOpen}
       >
@@ -36,7 +37,7 @@ const UserMenu = () => {
               flex
               flex-row
               items-center
-              gap-3
+              gap-5
               rounded-full
               hover:shadow-md
               transition
@@ -49,12 +50,12 @@ const UserMenu = () => {
           className="
               hidden
               md:block
-              text-sm
-              font-semibold
+              text-[.7rem]
+              font-normal
               transition
               "
         >
-          {auth?.user?.name}
+          {currentUser?.name}
         </div>
         <GoChevronDown />
       </div>
@@ -76,7 +77,12 @@ const UserMenu = () => {
         >
           <div className="flex flex-col cursor-pointer">
             <>
-              <MenuItem onClick={() => {}} label="Settings" />
+              <MenuItem
+                onClick={() => {
+                  navigate("settings");
+                }}
+                label="Settings"
+              />
 
               <MenuItem onClick={handleLogout} label="Logout" />
             </>

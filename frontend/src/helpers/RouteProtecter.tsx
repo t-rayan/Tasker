@@ -1,15 +1,17 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAppSelector } from "../app/hooks";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
-  const auth = useAppSelector((state) => state.auth);
+  const { currentUser } = useAppSelector((state) => state.user);
+  // const { token } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
-    !auth.user && navigate("/");
-  }, [auth.user, navigate]);
+    !currentUser && navigate("/auth");
+  }, [currentUser, navigate]);
 
+  // !currentUser ? <Navigate to="/auth" /> : <Navigate to="/" />;
   return children;
 };
 

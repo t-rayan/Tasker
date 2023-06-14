@@ -13,7 +13,7 @@ const BackButton: React.FC<BackButtonProps> = ({ isHidden = false }) => {
 
   const handleBackNavigation = (e: any) => {
     e.preventDefault();
-    navigate("/dashboard");
+    navigate(-1);
   };
 
   return (
@@ -24,9 +24,10 @@ const BackButton: React.FC<BackButtonProps> = ({ isHidden = false }) => {
           ` flex 
             justify-center 
             items-center 
-            border-[1px] 
+            border-[2px] 
+            bg-gray-900
             border-neutral-800 
-            text-gray-600
+            text-white
             rounded-md h-7 w-7 
             hover:shadow-lg 
             transition `,

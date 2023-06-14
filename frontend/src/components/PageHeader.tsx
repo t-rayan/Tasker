@@ -3,15 +3,20 @@
 import { GoKebabVertical } from "react-icons/go";
 import BackButton from "../components/BackButton";
 import clsx from "clsx";
+import { BsFolderPlus } from "react-icons/bs";
 
 interface PageHeaderProps {
   title: string;
   isButtonHidden?: boolean;
+  actionLabel?: string;
+  action?: () => void;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({
   title,
   isButtonHidden = false,
+  actionLabel,
+  action,
 }) => {
   return (
     <>
@@ -25,9 +30,15 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           <BackButton isHidden={isButtonHidden} />
           <h3 className="font-bold text-lg text-neutral-800">{title}</h3>
         </div>
-        <div className="cursor-pointer hover:bg-gray-200 p-1.5 rounded-full">
-          <GoKebabVertical />
-        </div>
+        {actionLabel && (
+          <div
+            className="cursor-pointer flex items-center gap-2 text-xs hover:bg-gray-200 p-2 px-4 rounded-full"
+            onClick={action}
+          >
+            <BsFolderPlus />
+            <p>{actionLabel}</p>
+          </div>
+        )}
       </div>
     </>
   );

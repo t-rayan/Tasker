@@ -2,10 +2,11 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState, AppThunk } from "../../app/store"
 import { getProfileService, loginService, registerService } from "./authServices"
 import { toast } from "react-hot-toast";
+import { clearCurrentUser, getProfileAction } from "../user/userSlice";
 
 export interface AuthState {
   isLoading: boolean;
-  token: string;
+  token: any;
   message: any;
   isError:boolean;
   user:any;
@@ -52,7 +53,7 @@ async (payload: any, {rejectWithValue, dispatch } ) => {
       if(status === 200) {
         localStorage.setItem('token', data);
         toast.success('Login successful');
-        dispatch(getProfileAction())
+        dispatch(getProfileAction(data))
         return data;
       }
     // The value we return becomes the `fulfillenamed` action payload
@@ -66,16 +67,14 @@ async (payload: any, {rejectWithValue, dispatch } ) => {
   },
 )
 
-export const getProfileAction = createAsyncThunk(
-  "auth/profile",
-  async (_, {rejectWithValue } ) => {
+export const logoutAction = createAsyncThunk(
+  "auth/logout",
+async (_, {rejectWithValue, dispatch } ) => {
     try {
-      const token:any = localStorage.getItem('token')
-      const res = await getProfileService(token);
-     const {status,data} = res;
-     if(status === 200) {
-      return data;
-     }      
+    
+      localStorage.removeItem('token');
+      dispatch(clearCurrentUser())
+
     // The value we return becomes the `fulfillenamed` action payload
     } catch (error:any) {
       if(error) {
@@ -86,6 +85,28 @@ export const getProfileAction = createAsyncThunk(
     
   },
 )
+
+
+// export const getProfileAction = createAsyncThunk(
+//   "auth/profile",
+//   async (_, {rejectWithValue } ) => {
+//     try {
+//       const token:any = localStorage.getItem('token')
+//       const res = await getProfileService(token);
+//      const {status,data} = res;
+//      if(status === 200) {
+//       return data;
+//      }      
+//     // The value we return becomes the `fulfillenamed` action payload
+//     } catch (error:any) {
+//       if(error) {
+//         toast.error(error.response.data.message)
+//       }
+//       return rejectWithValue(error.response.data.message)
+//     }
+    
+//   },
+// )
 
 
 export const authSlice = createSlice({
@@ -139,21 +160,35 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload
       })
-      .addCase(getProfileAction.pending, (state) => {
+      .addCase(logoutAction.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getProfileAction.fulfilled, (state, action) => {
+      .addCase(logoutAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.user = action.payload
+        state.token = null;
       })
-      .addCase(getProfileAction.rejected, (state,action) => {
+      .addCase(logoutAction.rejected, (state,action) => {
         state.isLoading = false;
         state.token= '';
         state.isError = true;
-        state.user= null;
         state.message = action.payload
-      });
+      })
+      // .addCase(getProfileAction.pending, (state) => {
+      //   state.isLoading = true;
+      // })
+      // .addCase(getProfileAction.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.isError = false;
+      //   state.user = action.payload
+      // })
+      // .addCase(getProfileAction.rejected, (state,action) => {
+      //   state.isLoading = false;
+      //   state.token= '';
+      //   state.isError = true;
+      //   state.user= null;
+      //   state.message = action.payload
+      // });
 
       
   },

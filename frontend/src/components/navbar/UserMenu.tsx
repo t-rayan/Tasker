@@ -53,11 +53,14 @@ const UserMenu = () => {
               text-[.7rem]
               font-normal
               transition
+              dark:text-neutral-400
               "
         >
           {currentUser?.name}
         </div>
-        <GoChevronDown />
+        <div className="dark:text-neutral-400">
+          <GoChevronDown />
+        </div>
       </div>
 
       {isOpen && (

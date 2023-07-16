@@ -163,7 +163,7 @@ export const folderSlice = createSlice({
       state.currentFolder = null;
     },
     clearSearchResults:(state) => {
-      state.searchResults = [];
+      state.searchResults = null;
     },
     updateFolderWithTask:(state,action) => {
       const {recentTask,currentFolder} = action.payload;

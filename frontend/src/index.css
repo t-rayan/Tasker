@@ -10,3 +10,8 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+.customCheckbox {
+  border: none !important;
+  background: blue;
+}

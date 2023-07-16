@@ -84,47 +84,6 @@ const SingleFolder: React.FC<ISingleFolderProps> = ({ title, id, tasks }) => {
         />
       )}
 
-      {/* <div
-        className="
-        flex 
-        justify-between 
-        py-5
-        px-4
-        md:px-6
-        h-32
-        shadow-sm
-        w-auto
-        bg-white
-        border-gray-300
-        rounded-lg"
-      >
-        <div
-          className="flex-1 flex flex-col justify-between cursor-pointer"
-          onClick={() => navigate(`${id}`)}
-        >
-          <div className="text-neutral-500 flex items-cent justify-center bg-gray-200 h-7 w-7 p-1 rounded-full ">
-            <AiOutlineFolder size={18} />
-          </div>
-          <div className="flex justify-between items-center">
-            <h3 className="font-semibold text-sm text-neutral-600">{title}</h3>
-          </div>
-        </div>
-
-        <div className="flex flex-col justify-between items-center">
-          <div
-            className="hover:bg-neutral-200 p-1 rounded-full cursor-pointer"
-            onClick={handleFolderClick}
-          >
-            <GoKebabVertical size={15} />
-          </div>
-          <div>
-            <h3 className="text-gray-400 text-sm font-medium">
-              {tasks?.length}/{completedTasks}
-            </h3>
-          </div>
-        </div>
-      </div> */}
-
       <div
         className="
         flex 
@@ -137,8 +96,8 @@ const SingleFolder: React.FC<ISingleFolderProps> = ({ title, id, tasks }) => {
       "
         onClick={() => navigate(`${id}`)}
       >
-        <div className="text-gray-700">
-          <AiOutlineFolder size={48} />
+        <div className="text-neutral-700 dark:text-[neutral-500]">
+          <AiOutlineFolder size={45} />
         </div>
         <div className="flex justify-between items-center mt-2">
           <h3 className="font-medium text-sm text-neutral-600">{title}</h3>
@@ -148,12 +107,12 @@ const SingleFolder: React.FC<ISingleFolderProps> = ({ title, id, tasks }) => {
         </h3>
       </div>
       <div className="flex flex-col justify-between items-center">
-        <div
+        {/* <div
           className="hover:bg-neutral-200 p-1 rounded-full cursor-pointer text-gray-500"
           onClick={handleFolderClick}
         >
           <GoKebabVertical size={15} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -39,10 +39,11 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
           pb-3 
           items-center 
           border-b-[1px] 
+          dark:border-darkCardBg
           cursor-pointer"
           onClick={toggleAccordion}
         >
-          <div className="flex gap-1 text-sm text-gray-600">
+          <div className="flex gap-1 text-sm text-neutral-600">
             <h3 className="font-medium">Incomplete</h3>
             <h3 className="font-medium">{inCompleteTasks?.length}</h3>
           </div>
@@ -70,12 +71,13 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
         justify-between 
         pb-3 
         border-b-[1px] 
-        border-gray-300
+          dark:border-darkCardBg
+        border-gray-200
         cursor-pointer
         items-center"
           onClick={toggleAccordion}
         >
-          <div className="flex gap-1 text-sm text-gray-600">
+          <div className="flex gap-1 text-sm text-neutral-600">
             <h3 className="font-medium">Completed</h3>
             <h3 className="font-medium">{completedTasks?.length}</h3>
           </div>

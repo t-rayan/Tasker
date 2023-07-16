@@ -9,7 +9,10 @@ import {
 import { RootState } from "../../app/store";
 import Accordion from "../../components/Accordion";
 import SingleTask from "../../components/Task/SingleTask";
-import { openAddTaskModal } from "../../features/ui/uiSlice";
+import {
+  openAddFolderModal,
+  openAddTaskModal,
+} from "../../features/ui/uiSlice";
 
 const SingleFolderPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,8 +39,8 @@ const SingleFolderPage = () => {
     <div>
       <PageHeader
         title={currentFolder?.name}
-        // actionLable={"Add task"}
-        // action={() => dispatch(openAddTaskModal())}
+        actionLabel={"Add Task"}
+        action={() => dispatch(openAddTaskModal())}
       />
       <div className=" h-full mt-10 flex flex-col gap-5">
         <Accordion data={currentFolder?.tasks} />

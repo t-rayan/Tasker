@@ -1,4 +1,6 @@
 import React from "react";
+import { useAppSelector } from "../app/hooks";
+import { RootState } from "../app/store";
 
 interface CircularProgressProps {
   percentage: number;
@@ -11,6 +13,8 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
   strokeWidth = 8,
   size = 65,
 }) => {
+  const { isDark } = useAppSelector((state: RootState) => state.ui);
+
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const progress = circumference - (percentage / 100) * circumference;
@@ -23,7 +27,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
       viewBox={`0 0 ${size} ${size}`}
     >
       <circle
-        className="stroke-current text-gray-200"
+        className="stroke-current text-gray-200 dark:text-gray-800"
         strokeWidth={strokeWidth}
         fill="transparent"
         r={radius}
@@ -31,7 +35,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
         cy={size / 2}
       />
       <circle
-        className="stroke-current text-blue-600"
+        className="stroke-current text-primaryColor"
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         fill="transparent"

@@ -16,8 +16,10 @@ const AddTaskModal = () => {
   const uiState = useAppSelector((state: RootState) => state.ui);
   const { isAddTaskModal } = uiState;
 
+  const { isLoading } = useAppSelector((state: RootState) => state.task);
+
   const folderState = useAppSelector((state: RootState) => state.folder);
-  const { isLoading, folders, isError, message, currentFolder } = folderState;
+  const { folders, isError, message, currentFolder } = folderState;
 
   const {
     register,
@@ -61,7 +63,11 @@ const AddTaskModal = () => {
         required
       />
       {!currentFolder && (
-        <SelectBox options={folders} action={getFodlerValue} />
+        <SelectBox
+          label="Choose Folder"
+          options={folders}
+          action={getFodlerValue}
+        />
       )}
       <Input
         label="Due date"

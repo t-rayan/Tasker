@@ -37,12 +37,12 @@ const DashboardPage = () => {
       {/* <PageHeader isButtonHidden title="Dashboard" /> */}
       <div>
         <div className=" flex flex-col gap-2">
-          <h1 className="font-semibold text-2xl text-black">
+          <h1 className="antialiased font-semibold text-2xl text-black dark:text-neutral-300">
             Simplify your workflow with efficient <br /> task management
           </h1>
           {/* <h1 className="font-bold text-2xl">Narayan Thapa</h1> */}
         </div>
-        <p className="mt-2 mb-8 text-gray-400 text-sm">
+        <p className="antialiased mt-2 mb-8 text-gray-400 text-sm">
           {" "}
           Stay Organized, Boost Productivity, and Accomplish More with Tasker
         </p>

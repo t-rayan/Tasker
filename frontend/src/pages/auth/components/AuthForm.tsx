@@ -12,15 +12,17 @@ import Button from "../../../components/Button";
 import Input from "../../../components/inputs/Input";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { loginAction, registerAction } from "../../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 type Variant = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
-  const auth = useAppSelector((state) => state.auth);
+  const { isLoading } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const [variant, setVariant] = useState<Variant>("LOGIN");
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
@@ -65,16 +67,19 @@ const AuthForm = () => {
       <div
         className="
         bg-neutral-50
+        dark:bg-transparent
+        dark:border-[1.5px]
+        dark:border-darkCardBg
           px-8
           py-8 
-          rounded-md
+          rounded-xl
           "
       >
         <div className="mb-7">
-          <h1 className="font-bold text-xl">
+          <h1 className="font-bold text-xl dark:text-neutral-400 ">
             {variant === "LOGIN" ? "Welcome back 👋" : "Welcome to Tasker 🙏"}
           </h1>
-          <h1 className="mt-1 font-semibold text-sm text-neutral-500">
+          <h1 className="mt-1 font-medium text-xs text-neutral-400">
             {variant === "LOGIN"
               ? "Please login to continue"
               : "Please register for new account."}
@@ -94,7 +99,7 @@ const AuthForm = () => {
           )}
           <Input
             id="email"
-            type="email"
+            type="text"
             label="Email"
             register={register}
             errors={errors}
@@ -110,9 +115,21 @@ const AuthForm = () => {
             disabled={isLoading}
             required
           />
+          {variant === "LOGIN" && (
+            <p
+              className="text-sm font-normal underline cursor-pointer hover:text-black text-gray-700"
+              onClick={() => navigate("forget-password")}
+            >
+              Forget Password
+            </p>
+          )}
           <div>
             <Button disabled={isLoading} type="submit" fullWidth>
-              {variant === "LOGIN" ? "Sign In" : "Register"}
+              {variant === "LOGIN"
+                ? isLoading
+                  ? "Signing in.."
+                  : "Sign In"
+                : "Register"}
             </Button>
           </div>
         </form>
@@ -126,7 +143,7 @@ const AuthForm = () => {
             text-sm
             mt-6
             px-2
-          text-gray-500"
+          text-neutral-400"
         >
           <div>
             {variant === "LOGIN"

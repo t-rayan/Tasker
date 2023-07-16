@@ -11,11 +11,11 @@ const SettingsPage = () => {
       <PageHeader title={"Settings"} />
       <div className="mt-10 flex flex-col gap-10 ">
         <div className="flex flex-col items-center justify-center gap-3">
-          <div className="rounded-full w-12 h-12 border-[2px] border-neutral-600 bg-white shadow-sm"></div>
+          <div className="rounded-full w-12 h-12 border-[2px] border-neutral-600 bg-white  shadow-sm"></div>
           <h3 className="font-bold">{currentUser?.name}</h3>
         </div>
 
-        <div className="flex flex-col gap-10 bg-gray-100 p-10 rounded-md">
+        <div className="flex flex-col gap-10 bg-gray-100 dark:bg-transparent dark:border-[1.5px] dark:border-darkCardBg p-10 rounded-md">
           {/* name container */}
           <div className="flex justify-between">
             <div className="flex flex-col gap-1">

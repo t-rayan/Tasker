@@ -6,19 +6,22 @@ interface IUiState {
   isEditFolderModal:boolean;
   isPopMenu: boolean;
   isAddTaskModal:boolean;
+  isDark:boolean;
 }
 
 const initialState:IUiState = {
   isAddFolderModal: false,
   isEditFolderModal: false,
   isPopMenu: false,
-  isAddTaskModal: false
+  isAddTaskModal: false,
+  isDark: false
 }
 
 export const uiSlice = createSlice({
   name:"ui",
   initialState,
   reducers:{
+
     openAddFolderModal:(state) => {
       state.isAddFolderModal = true;
     },
@@ -49,6 +52,10 @@ export const uiSlice = createSlice({
       state.isAddTaskModal = false;
     },
 
+    toggleTheme:(state) => {
+      state.isDark = !state.isDark
+    }
+
 
 
   }
@@ -62,6 +69,7 @@ export const {
   closePopMenu,
   togglePopMenu,
   openAddTaskModal,
-  closeAddTaskModal
+  closeAddTaskModal,
+  toggleTheme
 } = uiSlice.actions;
 export default uiSlice.reducer;

@@ -12,6 +12,7 @@ import { RootState } from "./app/store";
 import TasksPage from "./pages/Tasks/tasksPage";
 import SettingsPage from "./pages/settings/settingsPage";
 import SingleFolderPage from "./pages/folder/singleFolderPage";
+import ForgetPasswordPage from "./pages/auth/ForgetPasswordpage";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,11 +26,11 @@ function App() {
     token && dispatch(getProfileAction(token));
   }, [dispatch, token]);
 
-  useEffect(() => {
-    if (!currentUser) {
-      navigate("/auth");
-    }
-  }, [currentUser, navigate]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     navigate("/");
+  //   }
+  // }, [currentUser, navigate]);
 
   if (isLoading) {
     return (
@@ -61,6 +62,7 @@ function App() {
         </Route>
 
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/auth/forget-password" element={<ForgetPasswordPage />} />
       </Routes>
     </div>
   );

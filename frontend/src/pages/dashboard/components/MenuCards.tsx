@@ -32,23 +32,27 @@ const MenuCards: React.FC<MenuCardsProps> = ({
       md:items-center
       w-full  
       cursor-pointer 
-      bg-white
+      backdrop-blur-sm bg-white/30
+      dark:bg-transparent      
       border-[1px]
-      rounded-lg
+      dark:border-darkCardBg
+      rounded-md
       hover:scale-105
+      
       h-auto
       px-5
       py-5
-      backdrop-filter:blur(100px)
-      transition
+      transition-all
+      duration-500
+      ease-in-out
       "
     >
       <div className="flex gap-5 flex-col justify-between">
         <div>
-          <h3 className="font-semibold text-sm">{label}</h3>
+          <h3 className="font-semibold text-sm dark:text-gray-300">{label}</h3>
         </div>
         <div className="flex flex-col justify-between">
-          <div className=" text-md text-gray-500 font-semibold">
+          <div className=" text-md text-gray-500 dark:text-gray-300 font-semibold">
             {data?.completed}/{data?.total}
           </div>
           {/* <p className="text-[.7rem] text-gray-400">Last month 64</p> */}

@@ -4,6 +4,7 @@ import { GoKebabVertical } from "react-icons/go";
 import BackButton from "../components/BackButton";
 import clsx from "clsx";
 import { BsFolderPlus } from "react-icons/bs";
+import { FiPlus } from "react-icons/fi";
 
 interface PageHeaderProps {
   title: string;
@@ -28,14 +29,16 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           )}
         >
           <BackButton isHidden={isButtonHidden} />
-          <h3 className="font-bold text-lg text-neutral-800">{title}</h3>
+          <h3 className="font-bold text-lg text-neutral-800 dark:text-neutral-400">
+            {title}
+          </h3>
         </div>
         {actionLabel && (
           <div
-            className="cursor-pointer flex items-center gap-2 text-xs hover:bg-gray-200 p-2 px-4 rounded-full"
+            className="cursor-pointer dark:text-neutral-500 flex items-center gap-1 text-xs font-medium hover:text-neutral-600 hover:scale-105"
             onClick={action}
           >
-            <BsFolderPlus />
+            <FiPlus />
             <p>{actionLabel}</p>
           </div>
         )}

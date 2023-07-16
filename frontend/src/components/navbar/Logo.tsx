@@ -6,7 +6,9 @@ const Logo = () => {
       <div className="cursor-pointer block md:hidden">
         <AiOutlineMenu size={14} />
       </div>
-      <h2 className="font-bold text-lg md:text-2xl">Tasker</h2>
+      <h2 className="hidden font-bold text-lg md:text-2xl dark:text-neutral-800 ">
+        Tasker
+      </h2>
     </div>
   );
 };

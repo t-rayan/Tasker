@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import Button from "../Button";
+import Spinner from "../Spinner";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -75,6 +76,7 @@ const Modal: React.FC<ModalProps> = ({
        outline-none 
        focus:outline-none 
        bg-neutral-800/70
+       dark:bg-neutral-800/50
         px-5
        "
       >
@@ -116,29 +118,33 @@ const Modal: React.FC<ModalProps> = ({
               flex-col
               w-full
               bg-neutral-50
+              dark:bg-darkBg
               outline-none
               focus:outline-none
+              pb-5
             "
             >
               {/* header */}
-              <div className="flex items-center py-4 px-6 rounded-t justify-start relative border-b-[1px]">
+              <div className="flex items-center py-4 px-6 rounded-t justify-start relative border-b-[1px] dark:border-darkCardBg">
                 <button
                   onClick={handleClose}
-                  className="p-1 bg-neutral-200 rounded-md hover:opacity-70 transition absolute right-3"
+                  className="p-1 bg-neutral-200 dark:bg-darkCardBg rounded-md hover:opacity-70 transition absolute right-3 dark:text-neutral-600"
                 >
                   <IoMdClose size={14} />
                 </button>
-                <div className="text-lg font-semibold">{title}</div>
+                <div className="text-lg font-semibold dark:text-neutral-400">
+                  {title}
+                </div>
               </div>
 
               {/* body */}
-              <div className="relative p-6 flex-auto">{body}</div>
+              <div className="relative p-6  flex-auto">{body}</div>
 
               {/* footer */}
               <div className="flex flex-col gap-2 px-6 py-3">
                 <div className="flex flex-row items-center gap-4 w-full">
                   <Button onClick={handleSubmit} disabled={disabled} fullWidth>
-                    {actionLabel}
+                    {disabled ? <Spinner /> : actionLabel}
                   </Button>
                 </div>
               </div>

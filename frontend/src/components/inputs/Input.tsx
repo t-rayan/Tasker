@@ -29,9 +29,11 @@ const Input: React.FC<InputProps> = ({
         className="
     block
     text-sm
-    font-medium
+    font-semibold
     leading-6
-    text-gray-700"
+    text-gray-700
+    dark:text-neutral-500
+    "
         htmlFor={id}
       >
         {label}
@@ -49,20 +51,22 @@ const Input: React.FC<InputProps> = ({
             form-input
             block
             w-full
-            rounded-xl
+            rounded-lg
             py-2
             px-4
-            border-[2px]
-            text-gray-600
-            shadow-sm
+            dark:border-darkCardBg
+            dark:text-neutral-500
             outline-none
             placeholder:text-gray-400
+            border-[1px]
+            dark:placeholder:text-neutral-600
+            dark:bg-darkCardBg
             sm:text-sm
             sm:leading-6
           `,
             errors[id]
-              ? " focus-visible: border-rose-500"
-              : "focus-visible:border-[0] focus-visible:bg-neutral-100",
+              ? "focus-visible:ring-2 focus-visible: ring-rose-500"
+              : "focus-visible:border-[0] focus-visible:ring-2 ring-indigo-400 visited:bg-transparent",
             disabled && "opacity-50 cursor-default"
           )}
         />

@@ -14,6 +14,7 @@ import {
   openAddFolderModal,
   openAddTaskModal,
 } from "../../features/ui/uiSlice";
+import ThemeSwitcher from "../ThemeSwitcher";
 
 interface SidebarProps {
   folders?: any;
@@ -34,18 +35,22 @@ const Sidebar: React.FC<SidebarProps> = ({ folders }) => {
         md:w-56 
         md:overflow-y-auto 
         bg-white
-        md:border-r-[1px]
+        dark:bg-darkBg
+        dark:border-0
         md:pb-4
         md:flex
         md:flex-col
         justify-start
         px-6
+        transition-colors duration-75 ease-in-out
         "
     >
       <div className="h-full flex flex-col gap-10 ">
         {/* logo */}
         <div className="py-5 ">
-          <h1 className="font-bold text-2xl">Tasker</h1>
+          <h1 className=" font-mono font-semibold text-md dark:text-neutral-400  dark:first-letter:text-gray-900 first-letter:text-[1.3rem] first-letter:bg-primaryColor first-letter:px-1.5 first-letter:mr-[5px] first-letter:rounded-md ">
+            tasker
+          </h1>
         </div>
 
         {/* main menu */}
@@ -76,14 +81,19 @@ const Sidebar: React.FC<SidebarProps> = ({ folders }) => {
               />
             </div>
           </div>
-          <div
-            className="flex items-center gap-2 cursor-pointer text-neutral-500 hover:text-neutral-700"
-            onClick={() => dispatch(logoutAction())}
-          >
-            <div className="">
-              <HiOutlineMinusCircle />
+
+          <div className="flex flex-col gap-5">
+            <div
+              className="flex items-center gap-2 cursor-pointer text-neutral-500 hover:text-neutral-700"
+              onClick={() => dispatch(logoutAction())}
+            >
+              <div className="">
+                <HiOutlineMinusCircle />
+              </div>
+              <h3 className="text-sm">Logout</h3>
             </div>
-            <h3 className="text-sm">Logout</h3>
+
+            <ThemeSwitcher />
           </div>
         </div>
       </div>

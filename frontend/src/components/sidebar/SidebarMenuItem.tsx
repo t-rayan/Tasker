@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { IconType } from "react-icons";
-import { HiOutlinePlusCircle, HiOutlinePlusSm } from "react-icons/hi";
+import { HiOutlinePlusSm } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -32,7 +32,9 @@ const SidebarMenuItem: React.FC<SidebarMenuItemsProps> = ({
           <NavLink
             to={`${currentPath}`}
             className={({ isActive }) =>
-              isActive ? "text-black" : "text-gray-600"
+              isActive
+                ? "text-black dark:text-primaryColor "
+                : "text-neutral-500  dark:text-neutral-500 hover:text-black"
             }
           >
             <div
@@ -54,6 +56,8 @@ const SidebarMenuItem: React.FC<SidebarMenuItemsProps> = ({
             className="
           text-gray-500 
           bg-neutral-100 
+          dark:bg-neutral-800
+          dark:text-neutral-400
           p-0.5 
           rounded-full 
           cursor-pointer"

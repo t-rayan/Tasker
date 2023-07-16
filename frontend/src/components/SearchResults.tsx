@@ -5,23 +5,34 @@ import { RootState } from "../app/store";
 import { IFolder, clearSearchResults } from "../features/folder/folderSlice";
 import { useEffect } from "react";
 import { ITask } from "../features/task/taskSlice";
+import { useNavigate } from "react-router-dom";
 
 interface SearchResultsProps {
-  searchQuery?: any;
+  action?: any;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ action }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { searchResults } = useAppSelector((state: RootState) => state.folder);
 
   useEffect(() => {
     dispatch(clearSearchResults());
   }, [dispatch]);
 
+  const handleClearResult = () => {
+    action();
+  };
+
+  const handleFolderNavigation = (id: any) => {
+    handleClearResult();
+    navigate(`projects/${id}`);
+  };
+
   return (
     <>
       {searchResults && (
-        <div className="absolute top-10 rounded-md shadow-lg w-full min-h-[15rem] bg-gray-50 p-5">
+        <div className="absolute left-0 top-12 rounded-md shadow-lg w-full md:w-96 lg:w-[30rem] min-h-[15rem] bg-gray-100 dark:bg-darkCardBg p-5">
           <div className="">
             <h1 className="text-sm font-semibold mb-2 text-gray-500">
               Folders
@@ -34,11 +45,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery }) => {
               searchResults?.folders?.map((folder: IFolder) => (
                 <div
                   key={folder?._id}
-                  className="flex items-center gap-3 cursor-pointer hover:bg-gray-200 rounded-sm p-3"
+                  onClick={() => handleFolderNavigation(folder?._id)}
+                  className="flex items-center gap-3 cursor-pointer text-sm text-gray-500 hover:bg-gray-200 dark:hover:bg-darkBg rounded-sm p-3"
                 >
                   <AiOutlineFolder size={20} />
                   <div>
-                    <p className="text-sm text-gray-600">{folder?.name}</p>
+                    <p className="">{folder?.name}</p>
                   </div>
                 </div>
               ))
@@ -50,7 +62,20 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchQuery }) => {
             {searchResults?.tasks?.map((task: ITask) => (
               <div
                 key={task?._id}
-                className="flex items-center gap-3 text-gray-700 cursor-pointer hover:bg-gray-200 rounded-sm p-3"
+                onClick={() => {
+                  let folder: IFolder = task.folder;
+
+                  handleFolderNavigation(folder?._id);
+                }}
+                className="flex 
+                items-center 
+                gap-3 
+                text-gray-500  
+                cursor-pointer 
+                hover:bg-gray-200 
+                dark:hover:bg-darkBg
+                rounded-sm 
+                p-3"
               >
                 <MdOutlineTask size={20} />
                 <div>

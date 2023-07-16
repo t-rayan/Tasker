@@ -8,6 +8,7 @@ import { getProfileAction } from "../features/user/userSlice";
 import AddFolderModal from "../components/modals/AddFolderModal";
 import AddTaskModal from "../components/modals/AddTaskModal";
 import { Toaster } from "react-hot-toast";
+import MobileMenu from "../components/MobileMenu";
 
 const Layout = () => {
   const dispatch = useAppDispatch();
@@ -29,14 +30,15 @@ const Layout = () => {
   }, [currentUser, navigate]);
 
   return (
-    <div>
+    <div className="relative">
       <AddFolderModal />
       <AddTaskModal />
       <Navbar />
       <Toaster />
+      <MobileMenu />
 
       <Sidebar />
-      <div className="pt-24 pb-5 pl-0 md:pl-56 min-h-screen bg-white">
+      <div className="transition-colors duration-75 ease-in-out pt-24 pb-20 md:pb-8 pl-0 md:pl-56 min-h-screen bg-neutral-100 dark:bg-darkBg">
         <div className="md:w-full mr-auto h-full">
           <Container>
             <Outlet />

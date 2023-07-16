@@ -27,7 +27,12 @@ const BackButton: React.FC<BackButtonProps> = ({ isHidden = false }) => {
             border-[2px] 
             bg-gray-900
             border-neutral-800 
+            dark:bg-transparent
+            dark:border-darkCardBg 
+            dark:border-[3px]
+
             text-white
+            dark:text-gray-500
             rounded-md h-7 w-7 
             hover:shadow-lg 
             transition `,

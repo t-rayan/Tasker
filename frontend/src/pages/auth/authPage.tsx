@@ -15,7 +15,7 @@ const AuthPage = () => {
   }, [currentUser]);
 
   return (
-    <div className="bg-neutral-200 h-screen flex items-center justify-center">
+    <div className="bg-neutral-200 dark:bg-darkBg h-screen flex items-center justify-center">
       <Toaster />
       <AuthForm />
     </div>

@@ -16,13 +16,13 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
   // const completedTask = () ={}
   const getInCompletedTask = () => {
     const inCompleteTasks = data?.filter(
-      (task: any) => task?.isCompleted === false
+      (task: any) => task?.isCompleted === false,
     );
     return inCompleteTasks;
   };
   const getCompletedTask = () => {
     const completedTasks = data?.filter(
-      (task: any) => task?.isCompleted === true
+      (task: any) => task?.isCompleted === true,
     );
     return completedTasks;
   };

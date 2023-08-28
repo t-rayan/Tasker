@@ -2,13 +2,17 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../components/inputs/Input";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch } from "../../app/hooks";
 import { requestPasswordResetAction } from "../../features/auth/authSlice";
+import { Toaster } from "react-hot-toast";
+import { RootState } from "../../app/store";
 
 const ForgetPasswordPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { isLoading } = useSelector((state: RootState) => state.auth);
 
   const {
     register,
@@ -28,6 +32,7 @@ const ForgetPasswordPage = () => {
 
   return (
     <div className="h-screen bg-gray-200 grid place-items-center">
+      <Toaster />
       <div className="w-full p-7 md:w-2/4 bg-white rounded-lg">
         <div>
           <h1 className="text-lg">Forget password</h1>
@@ -47,7 +52,7 @@ const ForgetPasswordPage = () => {
               label="Email"
             />
             <div className="mt-7">
-              <Button fullWidth type="submit">
+              <Button fullWidth disabled={isLoading} type="submit">
                 Reset Password
               </Button>
             </div>

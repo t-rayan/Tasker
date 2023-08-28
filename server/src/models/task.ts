@@ -1,14 +1,17 @@
 import mongoose, { Document, Schema, mongo } from "mongoose";
 
+type Priority = "High" | "Medium" | "Low";
+
 interface ITask extends Document {
   title: string;
   isCompleted: boolean;
   userId: mongoose.Types.ObjectId;
   folder: mongoose.Types.ObjectId;
   dueDate: Date;
+  dueTime: Date;
   completedOn?: Date | any;
   created_at: Date;
-  isImportant: Boolean;
+  priority: Priority;
 }
 
 const taskSchema: Schema = new Schema({
@@ -18,8 +21,9 @@ const taskSchema: Schema = new Schema({
   isCompleted: { type: Boolean, default: false },
   completedOn: { type: Date },
   dueDate: { type: Date },
+  dueTime: { type: Date },
   created_at: { type: Date, default: Date.now() },
-  isImportant: { type: Boolean, default: false },
+  priority: { type: String, enum: ["High", "Medium", "Low"] },
 });
 
 const Task = mongoose.model<ITask>("Task", taskSchema);

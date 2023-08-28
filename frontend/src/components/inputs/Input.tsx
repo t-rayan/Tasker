@@ -5,6 +5,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 interface InputProps {
   label?: string;
   id: string;
+  name?: string;
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
@@ -29,7 +30,7 @@ const Input: React.FC<InputProps> = ({
         className="
     block
     text-sm
-    font-semibold
+    font-medium
     leading-6
     text-gray-700
     dark:text-neutral-500
@@ -48,6 +49,7 @@ const Input: React.FC<InputProps> = ({
           {...register(id, { required })}
           className={clsx(
             `
+            appearance-none
             form-input
             block
             w-full
@@ -57,7 +59,7 @@ const Input: React.FC<InputProps> = ({
             dark:border-darkCardBg
             dark:text-neutral-500
             outline-none
-            placeholder:text-gray-400
+            placeholder:text-gray-500
             border-[1px]
             dark:placeholder:text-neutral-600
             dark:bg-darkCardBg
@@ -66,8 +68,8 @@ const Input: React.FC<InputProps> = ({
           `,
             errors[id]
               ? "focus-visible:ring-2 focus-visible: ring-rose-500"
-              : "focus-visible:border-[0] focus-visible:ring-2 ring-indigo-400 visited:bg-transparent",
-            disabled && "opacity-50 cursor-default"
+              : "focus-visible:border-[0] focus-visible:ring-2 ring-blue-500 visited:bg-transparent",
+            disabled && "opacity-50 cursor-default",
           )}
         />
       </div>

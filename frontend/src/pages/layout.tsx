@@ -38,11 +38,9 @@ const Layout = () => {
       <MobileMenu />
 
       <Sidebar />
-      <div className="transition-colors duration-75 ease-in-out pt-24 pb-20 md:pb-8 pl-0 md:pl-56 min-h-screen bg-neutral-100 dark:bg-darkBg">
-        <div className="md:w-full mr-auto h-full">
-          <Container>
-            <Outlet />
-          </Container>
+      <div className="transition-colors duration-75 ease-in-out  pb-20 md:pb-3 pl-0 md:pl-56 h-screen overflow-y-scroll bg-neutral-50 dark:bg-darkBg">
+        <div className="px-7  min-h-screen mt-24 grid">
+          <Outlet />
         </div>
       </div>
     </div>

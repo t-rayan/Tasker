@@ -7,7 +7,7 @@ import UserMenu from "./UserMenu";
 const Navbar = () => {
   return (
     <div
-      className="fixed w-full md:pl-52 bg-neutral-100 dark:bg-darkBg z-10 transition-colors duration-75 ease-in-out
+      className="fixed w-full md:pl-52 bg-neutral-50 dark:bg-darkBg z-10 transition-colors duration-75 ease-in-out
     "
     >
       <div className="py-4  relative dark:border-0">

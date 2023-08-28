@@ -36,7 +36,7 @@ const BackButton: React.FC<BackButtonProps> = ({ isHidden = false }) => {
             rounded-md h-7 w-7 
             hover:shadow-lg 
             transition `,
-          isHidden && "hidden"
+          isHidden && "hidden",
         )}
       >
         <BiChevronLeft />

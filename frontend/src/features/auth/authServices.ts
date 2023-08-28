@@ -19,14 +19,14 @@ interface UserLoginData {
 }
 
 export const registerService = async (
-  userRegisterData: UserRegisterData
+  userRegisterData: UserRegisterData,
 ): Promise<any> => {
   const res = await normalInstance.post("/auth/register", userRegisterData);
   return res;
 };
 
 export const loginService = async (
-  userLoginData: UserLoginData
+  userLoginData: UserLoginData,
 ): Promise<any> => {
   const res = await Axios.post(`${base_url}/auth/login`, userLoginData);
   return res;
@@ -42,8 +42,22 @@ export const getProfileService = async (token: string): Promise<any> => {
   return res;
 };
 
-export const requestPasswordResetService = async (email: any): Promise<any> => {
-  console.log(email);
-  const res = await Axios.post(`${base_url}/auth/forget-password`, { email });
+export const requestPasswordResetService = async (data: any): Promise<any> => {
+  const res = await Axios.post(`${base_url}/auth/forget-password`, {
+    email: data.email,
+  });
+  return res;
+};
+export const updatePasswordService = async (data: {
+  token: string;
+  password: string;
+}): Promise<any> => {
+  console.log(data);
+  const res = await Axios.post(
+    `${base_url}/auth/reset-password/${data.token}`,
+    {
+      password: data.password,
+    },
+  );
   return res;
 };

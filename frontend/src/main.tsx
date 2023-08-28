@@ -16,17 +16,17 @@ import Layout from "./pages/layout.tsx";
 import AuthPage from "./pages/auth/authPage.tsx";
 import ErrorPage from "./pages/error-page.tsx";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/auth",
-    element: <AuthPage />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Layout />,
+//     errorElement: <ErrorPage />,
+//   },
+//   {
+//     path: "/auth",
+//     element: <AuthPage />,
+//   },
+// ]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -36,5 +36,5 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       </BrowserRouter>
       {/* <RouterProvider router={router} /> */}
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

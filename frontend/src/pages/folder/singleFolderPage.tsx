@@ -19,7 +19,7 @@ const SingleFolderPage = () => {
 
   const dispatch = useAppDispatch();
   const { currentFolder, isLoading } = useAppSelector(
-    (state: RootState) => state.folder
+    (state: RootState) => state.folder,
   );
 
   useEffect(() => {
@@ -36,12 +36,13 @@ const SingleFolderPage = () => {
   }
 
   return (
-    <div>
+    <div className="">
       <PageHeader
         title={currentFolder?.name}
         actionLabel={"Add Task"}
         action={() => dispatch(openAddTaskModal())}
       />
+
       <div className=" h-full mt-10 flex flex-col gap-5">
         <Accordion data={currentFolder?.tasks} />
       </div>

@@ -13,12 +13,13 @@ import TasksPage from "./pages/Tasks/tasksPage";
 import SettingsPage from "./pages/settings/settingsPage";
 import SingleFolderPage from "./pages/folder/singleFolderPage";
 import ForgetPasswordPage from "./pages/auth/ForgetPasswordpage";
+import ResetPasswordpage from "./pages/auth/ResetPasswordpage";
 
 function App() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isLoading, currentUser } = useAppSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.user,
   );
   const token = localStorage.getItem("token");
 
@@ -63,6 +64,10 @@ function App() {
 
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/forget-password" element={<ForgetPasswordPage />} />
+        <Route
+          path="/auth/reset-password/:token"
+          element={<ResetPasswordpage />}
+        />
       </Routes>
     </div>
   );

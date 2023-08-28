@@ -32,13 +32,15 @@ const AddTaskModal = () => {
     },
   });
 
+  console.log(currentFolder);
+
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(
       createTaskAction({
         title: data.title,
         dueDate: data.dueDate,
-        folder: currentFolder ? currentFolder._id : value,
-      })
+        folder: currentFolder ? currentFolder : value,
+      }),
     );
     reset();
   };
@@ -93,8 +95,8 @@ const AddTaskModal = () => {
       <Modal
         // disabled={isLoading}
         isOpen={isAddTaskModal}
-        title="New Task"
-        actionLabel="Add Task"
+        title="Add new task"
+        actionLabel="Add task"
         onClose={handleAddTaskModalClose}
         onSubmit={handleSubmit(onSubmit)}
         body={bodyContent}

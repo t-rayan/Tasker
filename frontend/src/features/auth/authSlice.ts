@@ -5,6 +5,7 @@ import {
   loginService,
   registerService,
   requestPasswordResetService,
+  updatePasswordService,
 } from "./authServices";
 import { toast } from "react-hot-toast";
 import { clearCurrentUser, getProfileAction } from "../user/userSlice";
@@ -49,7 +50,7 @@ export const registerAction = createAsyncThunk(
       }
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 export const loginAction = createAsyncThunk(
@@ -74,7 +75,7 @@ export const loginAction = createAsyncThunk(
       }
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 export const requestPasswordResetAction = createAsyncThunk(
@@ -82,7 +83,8 @@ export const requestPasswordResetAction = createAsyncThunk(
   async (payload: any, { rejectWithValue, dispatch }) => {
     try {
       const res = await requestPasswordResetService({ email: payload?.email });
-      // const { data, status } = res;
+      const { data, status } = res;
+      console.log(res);
       // if (status === 200) {
       //   localStorage.setItem("token", data);
       //   toast.success("Login successful");
@@ -92,11 +94,36 @@ export const requestPasswordResetAction = createAsyncThunk(
       // The value we return becomes the `fulfillenamed` action payload
     } catch (error: any) {
       if (error) {
-        toast.error(error.response.data.message);
+        toast.error(error?.response?.data?.message);
       }
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
+);
+export const updatePasswordAction = createAsyncThunk(
+  "auth/reset-password",
+  async (
+    payload: { token: any; password: string },
+    { rejectWithValue, dispatch },
+  ) => {
+    try {
+      const res = await updatePasswordService(payload);
+
+      // console.log(payload);
+      // if (status === 200) {
+      //   localStorage.setItem("token", data);
+      //   toast.success("Login successful");
+      //   dispatch(getProfileAction(data));
+      //   return data;
+      // }
+      // The value we return becomes the `fulfillenamed` action payload
+    } catch (error: any) {
+      if (error) {
+        toast.error(error?.response?.data?.message);
+      }
+      return rejectWithValue(error.response.data.message);
+    }
+  },
 );
 
 export const logoutAction = createAsyncThunk(
@@ -113,7 +140,7 @@ export const logoutAction = createAsyncThunk(
       }
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 // export const getProfileAction = createAsyncThunk(
@@ -196,41 +223,23 @@ export const authSlice = createSlice({
         state.token = "";
         state.isError = true;
         state.message = action.payload;
+      })
+      .addCase(requestPasswordResetAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(requestPasswordResetAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.message = "";
+      })
+      .addCase(requestPasswordResetAction.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
-    // .addCase(getProfileAction.pending, (state) => {
-    //   state.isLoading = true;
-    // })
-    // .addCase(getProfileAction.fulfilled, (state, action) => {
-    //   state.isLoading = false;
-    //   state.isError = false;
-    //   state.user = action.payload
-    // })
-    // .addCase(getProfileAction.rejected, (state,action) => {
-    //   state.isLoading = false;
-    //   state.token= '';
-    //   state.isError = true;
-    //   state.user= null;
-    //   state.message = action.payload
-    // });
   },
 });
 
 export const { logout } = authSlice.actions;
-
-// The function below is called a selector and allows us to select a value from
-// the state. Selectors can also be defined inline where they're used instead of
-// in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-// export const selectCount = (state: RootState) => state.counter.value
-
-// We can also write thunks by hand, which may contain both sync and async logic.
-// Here's an example of conditionally dispatching actions based on current state.
-// export const incrementIfOdd =
-//   (amount: number): AppThunk =>
-//   (dispatch, getState) => {
-//     const currentValue = selectCount(getState())
-//     if (currentValue % 2 === 1) {
-//       dispatch(incrementByAmount(amount))
-//     }
-//   }
 
 export default authSlice.reducer;

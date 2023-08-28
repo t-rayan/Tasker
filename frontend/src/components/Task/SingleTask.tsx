@@ -30,7 +30,7 @@ const SingleTask: React.FC<TaskProps> = ({ task, folderName }) => {
   const dispatch = useAppDispatch();
   const [isTaskPopMenu, setIsTaskPopMenu] = useState<boolean>(false);
   const { isLoading, isDeleting } = useAppSelector(
-    (state: RootState) => state.task
+    (state: RootState) => state.task,
   );
   const [currentId, setCurrentId] = useState<string>("");
   const {
@@ -43,7 +43,7 @@ const SingleTask: React.FC<TaskProps> = ({ task, folderName }) => {
   const handleTaskCompleted = () => {
     setCurrentId(task?._id);
     dispatch(
-      updateTaskAction({ _id: task._id, isCompleted: !task.isCompleted })
+      updateTaskAction({ _id: task._id, isCompleted: !task.isCompleted }),
     );
   };
 

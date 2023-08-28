@@ -13,14 +13,14 @@ const Stats = () => {
   const navigate = useNavigate();
   const { folders } = useAppSelector((state: RootState) => state.folder);
   const { tasks, todaysTasks } = useAppSelector(
-    (state: RootState) => state.task
+    (state: RootState) => state.task,
   );
 
   // calculate task completed in percentage
   const getTaskDonePercentage = () => {
     const tasksNum: number = tasks.length;
     const completedTaskNum: number = tasks.filter(
-      (task: ITask) => task.isCompleted === true
+      (task: ITask) => task.isCompleted === true,
     ).length;
 
     const percentage = (completedTaskNum / tasksNum) * 100;
@@ -36,7 +36,7 @@ const Stats = () => {
   const getTodaysTaskDonePercentage = () => {
     const todaysTasksNum: number = todaysTasks.length;
     const completedTaskNum: number = todaysTasks.filter(
-      (task: ITask) => task.isCompleted === true
+      (task: ITask) => task.isCompleted === true,
     ).length;
 
     const percentage = (completedTaskNum / todaysTasksNum) * 100;

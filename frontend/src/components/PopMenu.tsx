@@ -1,37 +1,42 @@
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { RootState } from "../app/store";
+import { ReactNode, useEffect, useRef } from "react";
+import { closePopMenu } from "../features/ui/uiSlice";
+import { clearCurrentFolder } from "../features/folder/folderSlice";
 
 interface IPopMenuProps {
-  onOpen?: boolean;
-  onEdit?: () => void;
-  onDelete?: () => void;
+  children?: ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const PopMenu: React.FC<IPopMenuProps> = ({ onEdit, onDelete }) => {
-  const uiState = useAppSelector((state: RootState) => state.ui);
-  const { isPopMenu } = uiState;
+const PopMenu: React.FC<IPopMenuProps> = ({ children, onClose, isOpen }) => {
+  const popmenuRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useAppDispatch();
 
-  // if (!isPopMenu) {
-  //   return null;
-  // }
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (
+        popmenuRef.current &&
+        !popmenuRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+        dispatch(clearCurrentFolder());
+      }
+    };
+    // if (isOpen) {
+    //   document.addEventListener("mousedown", handleOutsideClick);
+    // }
+  }, [dispatch, isOpen, popmenuRef]);
 
   return (
     <div
-      className="absolute 
-    top-[-30px] 
-    flex flex-col items-center justify-between z-30 py-2 right-[-35px] shadow-sm h-16 w-10 rounded-md bg-gray-900"
+      className={`absolute top-[40px]  ${
+        isOpen ? "flex" : "hidden"
+      } flex-col gap-y-4 z-30 py-4  -right-[.5rem] shadow-sm ring-1 ring-gray-200 h-auto min-h-24 w-auto min-w-[13rem] rounded-md bg-white  `}
+      ref={popmenuRef}
     >
-      <div
-        className="cursor-pointer text-white hover:text-green-600"
-        onClick={onEdit}
-      >
-        <AiOutlineEdit size={17} onClick={onEdit} />
-      </div>
-      {/* <div className="w-full h-0.5 bg-gray-300"></div> */}
-      <div className="cursor-pointer text-white hover:text-red-600">
-        <AiOutlineDelete size={17} onClick={onDelete} />
-      </div>
+      {children}
     </div>
   );
 };

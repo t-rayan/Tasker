@@ -25,7 +25,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
         <div
           className={clsx(
             `flex items-center`,
-            isButtonHidden ? "gap-0" : "gap-3"
+            isButtonHidden ? "gap-0" : "gap-3",
           )}
         >
           <BackButton isHidden={isButtonHidden} />

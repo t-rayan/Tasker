@@ -6,6 +6,7 @@ interface IUser extends Document {
   salt: string;
   password: string;
   resetToken?: string;
+  resetTokenExpiry?: number;
   created_at: Date;
 }
 
@@ -15,6 +16,7 @@ const userSchema: Schema = new Schema({
   salt: { type: String, required: true },
   password: { type: String, required: true },
   resetToken: { type: String },
+  resetTokenExpiry: { type: Number },
   created_at: { type: Date, default: Date.now() },
 });
 

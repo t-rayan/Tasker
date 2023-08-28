@@ -77,7 +77,7 @@ const Modal: React.FC<ModalProps> = ({
        focus:outline-none 
        bg-neutral-800/70
        dark:bg-neutral-800/50
-        px-5
+        p-12
        "
       >
         <div
@@ -111,13 +111,13 @@ const Modal: React.FC<ModalProps> = ({
               lg:h-auto
               md:h-auto
               border-0
-              rounded-md
+              rounded-xl
               shadow-lg
               relative
               flex
               flex-col
               w-full
-              bg-neutral-50
+              bg-white
               dark:bg-darkBg
               outline-none
               focus:outline-none
@@ -142,8 +142,11 @@ const Modal: React.FC<ModalProps> = ({
 
               {/* footer */}
               <div className="flex flex-col gap-2 px-6 py-3">
-                <div className="flex flex-row items-center gap-4 w-full">
-                  <Button onClick={handleSubmit} disabled={disabled} fullWidth>
+                <div className="flex flex-row justify-end items-center gap-4 w-full">
+                  <Button onClick={onClose} disabled={disabled} secondary sm>
+                    Cancel
+                  </Button>
+                  <Button onClick={handleSubmit} disabled={disabled} sm>
                     {disabled ? <Spinner /> : actionLabel}
                   </Button>
                 </div>

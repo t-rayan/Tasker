@@ -1,65 +1,59 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
 interface IUiState {
   isAddFolderModal: boolean;
-  isEditFolderModal:boolean;
+  isEditFolderModal: boolean;
   isPopMenu: boolean;
-  isAddTaskModal:boolean;
-  isDark:boolean;
+  isAddTaskModal: boolean;
+  isDark: boolean;
 }
 
-const initialState:IUiState = {
+const initialState: IUiState = {
   isAddFolderModal: false,
   isEditFolderModal: false,
-  isPopMenu: false,
+  isPopMenu: true,
   isAddTaskModal: false,
-  isDark: false
-}
+  isDark: false,
+};
 
 export const uiSlice = createSlice({
-  name:"ui",
+  name: "ui",
   initialState,
-  reducers:{
-
-    openAddFolderModal:(state) => {
+  reducers: {
+    openAddFolderModal: (state) => {
       state.isAddFolderModal = true;
     },
-    closeAddFolderModal:(state) => {
+    closeAddFolderModal: (state) => {
       state.isAddFolderModal = false;
     },
-
-    openEditFolderModal:(state) => {
+    openEditFolderModal: (state) => {
       state.isEditFolderModal = true;
     },
-    closeEditFolderModal:(state) => {
+    closeEditFolderModal: (state) => {
       state.isEditFolderModal = false;
     },
-    openPopMenu:(state) => {
+    openPopMenu: (state) => {
       state.isPopMenu = true;
     },
-    closePopMenu:(state) => {
+    closePopMenu: (state) => {
       state.isPopMenu = false;
-    },  
-    togglePopMenu:(state) => {
+    },
+    togglePopMenu: (state) => {
       state.isPopMenu = !state.isPopMenu;
     },
 
-    openAddTaskModal:(state) => {
+    openAddTaskModal: (state) => {
       state.isAddTaskModal = true;
     },
-    closeAddTaskModal:(state) => {
+    closeAddTaskModal: (state) => {
       state.isAddTaskModal = false;
     },
 
-    toggleTheme:(state) => {
-      state.isDark = !state.isDark
-    }
-
-
-
-  }
-})
+    toggleTheme: (state) => {
+      state.isDark = !state.isDark;
+    },
+  },
+});
 export const {
   openAddFolderModal,
   closeAddFolderModal,
@@ -70,6 +64,6 @@ export const {
   togglePopMenu,
   openAddTaskModal,
   closeAddTaskModal,
-  toggleTheme
+  toggleTheme,
 } = uiSlice.actions;
 export default uiSlice.reducer;

@@ -54,7 +54,7 @@ export const getAllTasksAction = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 export const getTodaysTasksAction = createAsyncThunk(
   "get/todaytasks",
@@ -69,12 +69,13 @@ export const getTodaysTasksAction = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 export const createTaskAction = createAsyncThunk(
   "create/task",
   async (payload: ITask, { rejectWithValue, getState, dispatch }) => {
     try {
+      console.log(payload);
       const state: RootState | any = getState();
       const token: string = state?.auth?.token;
       const { status, data } = await createTaskService(token, payload);
@@ -87,7 +88,7 @@ export const createTaskAction = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 export const updateTaskAction = createAsyncThunk(
   "update/task",
@@ -104,7 +105,7 @@ export const updateTaskAction = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 export const deleteTaskAction = createAsyncThunk(
   "delete/task",
@@ -122,7 +123,7 @@ export const deleteTaskAction = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
-  }
+  },
 );
 
 export const taskSlice = createSlice({
@@ -178,10 +179,10 @@ export const taskSlice = createSlice({
       .addCase(updateTaskAction.fulfilled, (state, action) => {
         const updatedTask = action.payload;
         const taskIndex = state.todaysTasks?.findIndex(
-          (task) => task?._id === updatedTask._id
+          (task) => task?._id === updatedTask._id,
         );
         const tIndex = state.tasks.findIndex(
-          (task) => task._id === updatedTask._id
+          (task) => task._id === updatedTask._id,
         );
         state.isLoading = false;
         state.isError = false;
@@ -202,10 +203,10 @@ export const taskSlice = createSlice({
         state.isDeleting = false;
         state.isError = false;
         state.todaysTasks = state.todaysTasks.filter(
-          (task) => task._id !== deletedTask._id
+          (task) => task._id !== deletedTask._id,
         );
         state.tasks = state.tasks.filter(
-          (task) => task._id !== deletedTask._id
+          (task) => task._id !== deletedTask._id,
         );
       })
       .addCase(deleteTaskAction.rejected, (state, action) => {

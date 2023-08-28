@@ -1,8 +1,10 @@
-import React, { ChangeEvent, useState } from "react";
-import Select from "react-select";
+import React, { useState } from "react";
 
-import axios from "axios";
 import { IFolder } from "../../features/folder/folderSlice";
+import Button from "../Button";
+import { AiOutlineFolder, AiOutlinePlus } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { openAddFolderModal } from "../../features/ui/uiSlice";
 
 interface ISelectBoxProps {
   options: IFolder[];
@@ -11,6 +13,8 @@ interface ISelectBoxProps {
 }
 
 const SelectBox: React.FC<ISelectBoxProps> = ({ options, action, label }) => {
+  const dispatch = useDispatch();
+
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("Select Folder");
 
@@ -23,36 +27,34 @@ const SelectBox: React.FC<ISelectBoxProps> = ({ options, action, label }) => {
 
   return (
     <div className=" w-full">
-      {/* <select
-        name="folders"
-        id="folder-select"
-        classNameName="apperance-none w-full text-sm dark:bg-darkCardBg border-0 rounded-lg p-3 text-neutral-500"
-        onChange={handleSelectChange}
-      >
-        <option value="" classNameName="mx-8">
-          Please choose Folder
-        </option>
-        {options.map((option) => (
-          <option value={option._id} key={option?._id}>
-            {option.name}
-          </option>
-        ))}
-      </select> */}
-
       <div className="relative inline-block text-left w-full">
-        <p>{label}</p>
+        <label
+          className=" block
+              text-sm
+              font-semibold
+              leading-6
+              mb-1
+              text-gray-700
+              dark:text-neutral-500"
+        >
+          {label}
+        </label>
         <div>
           <button
             type="button"
             className="inline-flex
+            focus:ring-2
+            focus:border-none
+            focus:ring-blue-500
+            bg-white
             text-neutral-500
              w-full 
              justify-between
             gap-x-1.5 
-              rounded-md 
+              rounded-lg
               border-[1px] 
               dark:bg-darkCardBg
-               px-4 py-2 text-sm font-light
+               px-4 py-2.5 text-sm font-light
                 hover:bg-gray-50"
             id="menu-button"
             aria-expanded="true"
@@ -101,18 +103,28 @@ const SelectBox: React.FC<ISelectBoxProps> = ({ options, action, label }) => {
             aria-labelledby="menu-button"
           >
             <div
-              className="py-3 px-1 flex flex-col gap-y-4 capitalize text-sm"
+              className="py-5 px-2 flex flex-col gap-1 capitalize text-sm"
               role="none"
             >
               {options?.map((option: any) => (
                 <div
-                  className="px-3 py-2 rounded-md cursor-pointer hover:dark:bg-darkBg"
+                  className="text-sm text-neutral-600 px-3 rounded-md cursor-pointer hover:dark:bg-darkBg flex items-center gap-2 hover:bg-gray-200 "
                   key={option?._id}
                   onClick={() => handleSelectChange(option)}
                 >
-                  <p>{option?.name}</p>
+                  <AiOutlineFolder size={17} />
+                  <p className="py-2">{option?.name}</p>
                 </div>
               ))}
+              <div className="px-3 mt-2">
+                <div
+                  className="bg-transparent ring-1 ring-gray-300 rounded-md flex gap-2 items-center justify-center px-4 py-2 cursor-pointer"
+                  onClick={() => dispatch(openAddFolderModal())}
+                >
+                  <AiOutlinePlus />
+                  <p>Add Folder</p>
+                </div>
+              </div>
             </div>
           </div>
         )}

@@ -4,6 +4,7 @@ import {
   deleteFolderService,
   getAllFoldersService,
   getSingleFolderService,
+  markFolderAsCompleteService,
   searchFoldersAndTasksService,
   updateFolderService,
 } from "./folderService";
@@ -18,10 +19,12 @@ export interface IFolder {
   userId: string;
   tasks: ITask[];
   color: string;
+  isComplete: boolean;
 }
 
 interface IFolderState {
   isLoading: boolean;
+  loading: any;
   message: any;
   isError: boolean;
   folders: IFolder[];
@@ -31,6 +34,12 @@ interface IFolderState {
 
 const initialState: IFolderState = {
   isLoading: false,
+  loading: {
+    create: false,
+    read: false,
+    update: false,
+    delete: false,
+  },
   message: null,
   isError: false,
   folders: [],
@@ -86,12 +95,16 @@ export const createFolderAction = createAsyncThunk(
 
 export const deleteFolderAction = createAsyncThunk(
   "delete/folder",
-  async (payload: any, { rejectWithValue, getState }) => {
+  async (
+    payload: { id: any; cb: () => void },
+    { rejectWithValue, getState, dispatch },
+  ) => {
     try {
       const state: RootState | any = getState();
       const token: string = state?.auth?.token;
-      const { status, data } = await deleteFolderService(token, payload);
+      const { status, data } = await deleteFolderService(token, payload.id);
       if (status === 200) {
+        dispatch(() => payload.cb());
         toast.success("Folder Deleted");
         return data;
       }
@@ -135,6 +148,28 @@ export const updateFolderAction = createAsyncThunk(
       if (status === 200) {
         toast.success("Folder updated");
         payload.onClose();
+        return data;
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);
+export const markFolderAsCompleteAction = createAsyncThunk(
+  "mark-complete/folder",
+  async (payload: { id: any }, { rejectWithValue, getState }) => {
+    try {
+      const state: RootState | any = getState();
+      const token: string = state?.auth?.token;
+      const folderId: string = payload?.id;
+
+      const { status, data } = await markFolderAsCompleteService(
+        token,
+        folderId,
+      );
+      console.log(data);
+      if (status === 200) {
+        toast.success("Completed");
         return data;
       }
     } catch (error: any) {
@@ -192,12 +227,14 @@ export const folderSlice = createSlice({
       state.folders[folderIndex] = currentFolder;
     },
     updateFolderTaskStatus: (state, action) => {
-      const updatedTask = action.payload;
+      const updatedFolder = action.payload;
+      // console.log(updatedTask);
       if (state.currentFolder) {
         const index = state.currentFolder.tasks.findIndex(
-          (task: any) => task._id === updatedTask._id,
+          (task: any) => task._id === updatedFolder._id,
         );
-        state.currentFolder.tasks[index] = updatedTask;
+        // state.currentFolder.tasks[index] = updatedTask;
+        state.currentFolder = updatedFolder;
       }
     },
     updateFolderAfterTaskDeleted: (state, action) => {
@@ -258,10 +295,10 @@ export const folderSlice = createSlice({
         state.message = action.payload;
       })
       .addCase(deleteFolderAction.pending, (state) => {
-        state.isLoading = true;
+        state.loading.delete = true;
       })
       .addCase(deleteFolderAction.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.loading.delete = false;
         state.isError = false;
         state.folders = state.folders.filter(
           (folder) => folder._id !== action.payload._id,
@@ -269,7 +306,7 @@ export const folderSlice = createSlice({
       })
       .addCase(deleteFolderAction.rejected, (state, action) => {
         state.isError = true;
-        state.isLoading = false;
+        state.loading.delete = false;
         state.message = action.payload;
       })
       .addCase(getSingleFolderAction.pending, (state) => {
@@ -304,6 +341,29 @@ export const folderSlice = createSlice({
       .addCase(updateFolderAction.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
+        state.message = action.payload;
+      })
+      .addCase(markFolderAsCompleteAction.pending, (state) => {
+        state.loading.update = true;
+      })
+      .addCase(markFolderAsCompleteAction.fulfilled, (state, action) => {
+        const completedFolder = action.payload;
+
+        const index = state.folders.findIndex(
+          (folder) => folder._id === completedFolder._id,
+        );
+        if (index !== -1) {
+          state.folders[index] = completedFolder;
+        }
+
+        state.loading.update = false;
+
+        state.isError = false;
+      })
+      .addCase(markFolderAsCompleteAction.rejected, (state, action) => {
+        state.isError = true;
+        state.loading.update = false;
+
         state.message = action.payload;
       })
       .addCase(searchFoldersAndTasksAction.pending, (state) => {

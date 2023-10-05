@@ -64,6 +64,23 @@ export const updateFolderService = async (
 
   return res;
 };
+export const markFolderAsCompleteService = async (
+  token: string,
+  folderId: any,
+  updateData?: IFolder,
+): Promise<any> => {
+  const res = await Axios.put(
+    `${base_url}/folders/complete/${folderId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  return res;
+};
 
 export const searchFoldersAndTasksService = async (
   token: string,

@@ -5,6 +5,7 @@ export interface IFolder extends Document {
   color: string;
   userId: Types.ObjectId;
   tasks: Types.ObjectId[];
+  isComplete?: boolean;
 }
 
 const folderSchema: Schema = new Schema({
@@ -12,6 +13,7 @@ const folderSchema: Schema = new Schema({
   color: { type: String },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
+  isComplete: { type: Boolean, default: false },
 });
 
 const Folder = mongoose.model<IFolder>("Folder", folderSchema);

@@ -3,6 +3,8 @@ import Folder, { IFolder } from "../models/folder";
 
 import { MyRequestObject } from "middlewares";
 import Task from "../models/task";
+import { modifyTask } from "./taskController";
+import mongoose from "mongoose";
 
 export const getAllFolders = async (req: MyRequestObject, res: Response) => {
   try {
@@ -80,7 +82,6 @@ export const updateFolder = async (req: MyRequestObject, res: Response) => {
   try {
     const { id } = req.params;
     const { name, color } = req.body;
-    console.log(color);
 
     const updatedFolder: IFolder | null = await Folder.findByIdAndUpdate(
       id,
@@ -91,6 +92,33 @@ export const updateFolder = async (req: MyRequestObject, res: Response) => {
       return res.status(404).json({ message: "Folder not found" });
     }
     return res.status(200).json(updatedFolder);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const markFolderAsComplete = async (
+  req: MyRequestObject,
+  res: Response
+) => {
+  const { id } = req.params;
+
+  try {
+    const folderExist = await Folder.findById(id).populate("tasks");
+    if (folderExist) {
+      const tasks = folderExist.tasks;
+
+      if (tasks.length > 0) {
+        const taskIds = tasks.map((task) => task._id.toString());
+
+        for (let taskId of taskIds) {
+          await modifyTask(taskId);
+        }
+        folderExist.isComplete = true;
+        const completed = await folderExist.save();
+        return res.status(200).json(completed);
+      }
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -131,4 +159,26 @@ export const searchFolderOrTask = async (
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
+};
+
+export const changeFolderCompletedStatus = async (folderId: string) => {
+  const id = new mongoose.Types.ObjectId(folderId);
+  if (id) {
+    try {
+      const folderExist = await Folder.findById(id).populate("tasks");
+      if (folderExist && folderExist?.tasks.length > 0) {
+        const taskStatus = folderExist?.tasks.map(
+          (task: any) => task?.isCompleted
+        );
+        let checker = taskStatus.every((v) => v === true);
+
+        folderExist.isComplete = checker ? true : false;
+        const saved = await folderExist.save();
+        return saved;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return;
 };

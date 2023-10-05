@@ -98,7 +98,7 @@ export const updateTaskAction = createAsyncThunk(
       const token: string = state?.auth?.token;
       const { status, data } = await updateTaskService(token, payload);
       if (status === 201) {
-        dispatch(updateFolderTaskStatus(data));
+        dispatch(updateFolderTaskStatus(data.modifiedFolder));
         // dispatch(closeAddTaskModal());
         return data;
       }
@@ -177,7 +177,7 @@ export const taskSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(updateTaskAction.fulfilled, (state, action) => {
-        const updatedTask = action.payload;
+        const updatedTask = action.payload?.updatedTask;
         const taskIndex = state.todaysTasks?.findIndex(
           (task) => task?._id === updatedTask._id,
         );

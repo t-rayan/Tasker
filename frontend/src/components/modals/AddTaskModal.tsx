@@ -7,7 +7,7 @@ import { RootState } from "../../app/store";
 import { closeAddTaskModal } from "../../features/ui/uiSlice";
 import { createTaskAction } from "../../features/task/taskSlice";
 import SelectBox from "../inputs/SelectBox";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const AddTaskModal = () => {
   const dispatch = useAppDispatch();
@@ -32,22 +32,20 @@ const AddTaskModal = () => {
     },
   });
 
-  console.log(currentFolder);
-
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     dispatch(
       createTaskAction({
         title: data.title,
         dueDate: data.dueDate,
-        folder: currentFolder ? currentFolder : value,
+        folder: currentFolder ? currentFolder?._id : value,
       }),
     );
     reset();
   };
 
-  const handleAddTaskModalClose = () => {
+  const handleAddTaskModalClose = useCallback(() => {
     dispatch(closeAddTaskModal());
-  };
+  }, [dispatch]);
 
   const getFodlerValue = (folderId: string) => {
     setValue(folderId);
@@ -84,11 +82,11 @@ const AddTaskModal = () => {
     </div>
   );
 
-  useEffect(() => {
-    return () => {
-      reset();
-    };
-  }, [reset]);
+  // useEffect(() => {
+  //   return () => {
+  //     reset();
+  //   };
+  // }, [reset]);
 
   return (
     <div>

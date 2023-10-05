@@ -24,9 +24,9 @@ const PopMenu: React.FC<IPopMenuProps> = ({ children, onClose, isOpen }) => {
         dispatch(clearCurrentFolder());
       }
     };
-    // if (isOpen) {
-    //   document.addEventListener("mousedown", handleOutsideClick);
-    // }
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
   }, [dispatch, isOpen, popmenuRef]);
 
   return (

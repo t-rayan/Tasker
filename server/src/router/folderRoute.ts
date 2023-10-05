@@ -6,6 +6,7 @@ import {
   getSingleFolder,
   searchFolderOrTask,
   updateFolder,
+  markFolderAsComplete,
 } from "../controllers/folderController";
 import express from "express";
 
@@ -17,6 +18,7 @@ export default (router: express.Router) => {
 
   router.post("/folders", isAuthenticated, createFolder);
   router.put("/folders/:id", isAuthenticated, updateFolder);
+  router.put("/folders/complete/:id", isAuthenticated, markFolderAsComplete);
 
   router.delete("/folders/:id", isAuthenticated, deleteFolder);
 };

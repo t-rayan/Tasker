@@ -5,13 +5,13 @@ const Spinner: React.FC = () => {
     <div className="flex justify-center items-center">
       <svg
         className="inline-block 
-        h-5 
-        w-5 
+        h-4
+        w-4 
         animate-spin 
         rounded-full 
-        border-[4px] 
+        border-[2px] 
         border-solid 
-        border-slate-500
+        border-slate-400
         border-current 
         border-r-transparent
         align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite"

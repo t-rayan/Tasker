@@ -1,6 +1,18 @@
 import mongoose, { Document, Schema, mongo } from "mongoose";
 
 type Priority = "High" | "Medium" | "Low";
+interface ISubTask {
+  title?: string;
+  isCompleted?: boolean;
+  dueDate?: Date;
+  dueTime?: Date;
+  completedOn?: Date | any;
+  created_at?: Date;
+  priority?: Priority;
+  description?: string;
+  reminder?: boolean;
+  reminderDate?: Date;
+}
 
 interface ITask extends Document {
   title: string;
@@ -12,6 +24,10 @@ interface ITask extends Document {
   completedOn?: Date | any;
   created_at: Date;
   priority: Priority;
+  description?: string;
+  reminder?: boolean;
+  reminderDate?: Date;
+  subTasks?: ISubTask[];
 }
 
 const taskSchema: Schema = new Schema({
@@ -24,6 +40,7 @@ const taskSchema: Schema = new Schema({
   dueTime: { type: Date },
   created_at: { type: Date, default: Date.now() },
   priority: { type: String, enum: ["High", "Medium", "Low"] },
+  subTasks: [{ type: String }],
 });
 
 const Task = mongoose.model<ITask>("Task", taskSchema);

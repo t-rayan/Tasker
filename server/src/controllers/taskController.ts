@@ -4,6 +4,7 @@ import Task from "../models/task";
 import { MyRequestObject } from "middlewares";
 import mongoose from "mongoose";
 import Folder from "../models/folder";
+import { changeFolderCompletedStatus } from "./folderController";
 
 export const getAllTasks = async (req: MyRequestObject, res: Response) => {
   try {
@@ -98,7 +99,17 @@ export const updateTask = async (req: MyRequestObject, res: Response) => {
     }
     const updatedTask = await task.save();
 
-    return res.status(201).json(updatedTask);
+    if (updatedTask) {
+      const modifiedFolder = await changeFolderCompletedStatus(
+        updatedTask?.folder.toString()
+      );
+      return res.status(201).json({ updatedTask, modifiedFolder });
+    }
+    // if task update successfully
+    // then get the folder id and find one folder with that id
+    // if there is a folder check if tasks array is empty
+    // if there are tasks get all tasks completed status
+    // if all tasks are completed then set folder as completed
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -115,5 +126,21 @@ export const deleteTask = async (req: MyRequestObject, res: Response) => {
     return res.status(200).json(deletedTask);
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+export const modifyTask = async (taskId: string) => {
+  try {
+    const id = new mongoose.Types.ObjectId(taskId);
+    const task = await Task.findById(id);
+
+    if (!task) {
+      return;
+    }
+    task.isCompleted = true;
+    await task.save();
+    return "task completed";
+  } catch (error) {
+    console.log(error?.message);
   }
 };

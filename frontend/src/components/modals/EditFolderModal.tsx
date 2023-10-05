@@ -39,7 +39,6 @@ const EditFolderModal: React.FC<IEditFolderModalProps> = ({
   const dispatch = useAppDispatch();
 
   const [selectedColor, setSelectedColor] = useState<string>(data?.color);
-  console.log(selectedColor);
   const uiState = useAppSelector((state: RootState) => state.ui);
   const { isEditFolderModal } = uiState;
 

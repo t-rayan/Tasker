@@ -5,6 +5,7 @@ import SingleFolder from "./components/SingleFolder";
 import { openAddFolderModal } from "../../features/ui/uiSlice";
 import { AiOutlineFolderAdd } from "react-icons/ai";
 import { GrFormAdd } from "react-icons/gr";
+import { IFolder } from "../../features/folder/folderSlice";
 
 const FolderPage = () => {
   const dispatch = useAppDispatch();
@@ -44,13 +45,14 @@ const FolderPage = () => {
         action={() => dispatch(openAddFolderModal())}
       />
       <div className="mt-12 grid justify-between grid-cols-4 gap-10">
-        {folders?.map((folder: any) => (
+        {folders?.map((folder: IFolder) => (
           <div key={folder?._id}>
             <SingleFolder
               title={folder?.name}
               tasks={folder?.tasks}
               id={folder?._id}
               color={folder?.color}
+              isComplete={folder?.isComplete}
             />
           </div>
         ))}
